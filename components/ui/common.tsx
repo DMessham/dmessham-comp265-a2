@@ -46,6 +46,8 @@ type stopListItem = {
 
 type Props = {
     routes: routesRow[];
+
+    dataState: "loading" | "error" | "empty" | "success";
 };
 
 export function showAlert(message: string) {
@@ -83,97 +85,189 @@ export let routes = [
 ]
 
 
-export function RouteList({ routes }: Props) {
-    return (
-        <PaperProvider theme={theme}>
-            <View>
-                {/* routes List */}
-                {routes.map((row, idx) => (
+export function RouteList({ routes, dataState }: Props) {
+    switch (dataState) {
+        case "loading":
+            return (
+                <PaperProvider theme={theme}>
                     <View style={styles.routesCard}>
-                        <React.Fragment key={row.name}>
+                        <ActivityIndicator size="large" />
+                        <Text style={styles.hero}>It's taking a while to get realtime info...</Text>
+                        <ProgressBar indeterminate />
+                    </View>
+                </PaperProvider>
+            )
+        case "empty":
+            return (
+                <PaperProvider theme={theme}>
+                    <View>
+                        {/* routes List */}
+                        <View style={styles.routesCard}>
                             <List.Item
-                                title={row.name}
+                                title="No Results"
                                 titleStyle={styles.routesDay}
-                                left={() => (
-                                    <Text style={styles.routesTemps}>
-                                        {row.routeNumber}
-
-                                    </Text>
-                                )}
-                                right={() => (
-                                    <Text style={styles.routesTemps}>
-                                        In {row.arrivalTime} & {row.nextArrivalTime} Minutes
-                                        {/* Show on map */}
-                                    </Text>
-
-                                )}
                                 style={styles.routesRow}
                             />
                             <View style={styles.stopsCard}>
                                 {/* TODO: make hide/show functions work */}
-                                <React.Fragment key={`${row.name}-stoplistHeader`}>
-                                    <List.Item
-                                        title={`${row.stops.length} stops`}
-                                        titleStyle={styles.routesTemps}
-                                        right={() => (
-                                            <>
-                                                <Link
-                                                    style={styles.button}
-                                                    href={{
-                                                        pathname: '/home/details',
-                                                        params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
-                                                    }}> Show On Map</Link>
-                                                <IconButton
-                                                    icon="chevron-down"
-                                                    size={22}
-                                                    iconColor="rgba(255,255,255,0.95)"
+                                <List.Item
+                                    title="error"
+                                    titleStyle={styles.routesTemps}
+                                    right={() => (
+                                        <>
 
-                                                    style={styles.iconBtnTight}
-                                                // onPress={onPressSettings}
-                                                />
-                                            </>
+                                            <IconButton
+                                                icon="chevron-down"
+                                                size={22}
+                                                iconColor="rgba(255,255,255,0.95)"
+
+                                                style={styles.iconBtnTight}
+                                            // onPress={onPressSettings}
+                                            />
+                                        </>
+
+                                    )}
+                                    style={styles.stoplistHeaderRow}
+                                />
+                                {/* stop list */}
+
+                                <List.Item
+                                    title=""
+                                    titleStyle={styles.routesDay}
+                                    left={() => (
+                                        // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
+                                        //     style={styles.iconBtnTight} />
+                                        <Text>test</Text>
+                                    )}
+                                    right={() => (
+                                        <Text style={styles.routesTemps}>
+                                            error
+                                        </Text>
+
+                                    )}
+                                    style={styles.routesRow}
+                                />
+                            </View>
+                        </View>
+                    </View>
+                </PaperProvider>
+            )
+        case "success":
+            return (
+                <PaperProvider theme={theme}>
+                    <View>
+                        {/* routes List */}
+                        {routes.map((row, idx) => (
+                            <View style={styles.routesCard}>
+                                <React.Fragment key={row.name}>
+                                    <List.Item
+                                        title={row.name}
+                                        titleStyle={styles.routesDay}
+                                        left={() => (
+                                            <Text style={styles.routesTemps}>
+                                                {row.routeNumber}
+
+                                            </Text>
+                                        )}
+                                        right={() => (
+                                            <Text style={styles.routesTemps}>
+                                                In {row.arrivalTime} & {row.nextArrivalTime} Minutes
+                                                {/* Show on map */}
+                                            </Text>
 
                                         )}
-                                        style={styles.stoplistHeaderRow}
+                                        style={styles.routesRow}
                                     />
-                                </React.Fragment>
-                                {/* stop list */}
-                                {row.stops.map((row2, idx) => (
-                                    <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
-                                        <List.Item
-                                            title={row2.name}
-                                            titleStyle={styles.routesDay}
-                                            left={() => (
-                                                // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
-                                                //     style={styles.iconBtnTight} />
-                                                <Image
-                                                    style={styles.stopIcon}
-                                                    source={{
-                                                        uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                                                    }}
+                                    <View style={styles.stopsCard}>
+                                        {/* TODO: make hide/show functions work */}
+                                        <React.Fragment key={`${row.name}-stoplistHeader`}>
+                                            <List.Item
+                                                title={`${row.stops.length} stops`}
+                                                titleStyle={styles.routesTemps}
+                                                right={() => (
+                                                    <>
+                                                        <Link
+                                                            style={styles.button}
+                                                            href={{
+                                                                pathname: '/home/details',
+                                                                params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
+                                                            }}> Show On Map</Link>
+                                                        <IconButton
+                                                            icon="chevron-down"
+                                                            size={22}
+                                                            iconColor="rgba(255,255,255,0.95)"
+
+                                                            style={styles.iconBtnTight}
+                                                        // onPress={onPressSettings}
+                                                        />
+                                                    </>
+
+                                                )}
+                                                style={styles.stoplistHeaderRow}
+                                            />
+                                        </React.Fragment>
+                                        {/* stop list */}
+                                        {row.stops.map((row2, idx) => (
+                                            <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
+                                                <List.Item
+                                                    title={row2.name}
+                                                    titleStyle={styles.routesDay}
+                                                    left={() => (
+                                                        // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
+                                                        //     style={styles.iconBtnTight} />
+                                                        <Image
+                                                            style={styles.stopIcon}
+                                                            source={{
+                                                                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                                                            }}
+                                                        />
+                                                    )}
+                                                    right={() => (
+                                                        <Text style={styles.routesTemps}>
+                                                            In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
+                                                        </Text>
+
+                                                    )}
+                                                    style={styles.routesRow}
                                                 />
-                                            )}
-                                            right={() => (
-                                                <Text style={styles.routesTemps}>
-                                                    In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
-                                                </Text>
+                                                {idx < row.stops.length - 1 ? (
+                                                    <Divider style={styles.divider} />
+                                                ) : null}
+                                            </React.Fragment>
+                                        ))}
+                                    </View>
 
-                                            )}
-                                            style={styles.routesRow}
-                                        />
-                                        {idx < row.stops.length - 1 ? (
-                                            <Divider style={styles.divider} />
-                                        ) : null}
-                                    </React.Fragment>
-                                ))}
+                                </React.Fragment>
                             </View>
-
-                        </React.Fragment>
+                        ))}
                     </View>
-                ))}
-            </View>
-        </PaperProvider>
-    );
+                </PaperProvider>
+            );
+        default:
+            return (
+                <PaperProvider theme={theme}>
+                    <View>
+                        {/* routes List */}
+                        <View style={styles.routesCard}>
+                            <List.Item
+                                title="ERROR"
+                                titleStyle={styles.routesDay}
+                                style={styles.routesRow}
+                            />
+                            <View style={styles.stopsCard}>
+                                {/* TODO: make hide/show functions work */}
+                                <List.Item
+                                    title="error"
+                                    titleStyle={styles.routesTemps}
+                                    style={styles.stoplistHeaderRow}
+                                />
+                                
+                            </View>
+                        </View>
+                    </View>
+                </PaperProvider>
+            );
+    }
 }
 
 
@@ -191,10 +285,10 @@ export function SearchList({ routes }: Props) {
             <Appbar.Header style={styles.appbar}>
                 <View style={styles.topRow}>
                     <View style={styles.tempRow}>
-                            <Image
+                        <Image
                             style={styles.logo}
                             source={{
-                            uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
                             }}
                         />
                         <Text variant="displaySmall" style={styles.tempText}>
@@ -237,10 +331,10 @@ export function SearchList({ routes }: Props) {
 
             {/* Hero Section */}
             <View style={styles.hero}>
-                
-                    <ActivityIndicator size="large"/>
-                    <Text  style={styles.hero}>It's taking a while to load maps...</Text>
-                    <View style={styles.illustrationWrap}>
+
+                <ActivityIndicator size="large" />
+                <Text style={styles.hero}>It's taking a while to load maps...</Text>
+                <View style={styles.illustrationWrap}>
                 </View>
                 {/* TODO: add map */}
             </View>
@@ -275,7 +369,7 @@ export function SearchList({ routes }: Props) {
             </View>
             <View>
                 {/* routes List */}
-                <RouteList routes={routes}></RouteList>
+                <RouteList routes={routes} dataState='loading'></RouteList>
             </View>
         </PaperProvider>
     );

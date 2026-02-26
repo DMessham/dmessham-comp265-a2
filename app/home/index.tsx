@@ -153,7 +153,7 @@ export default function App({
             enterKeyHint="search"
             returnKeyType="search"
             inputMode="search"
-            placeholder="Where do you want to go" />
+            placeholder="Where do you want to go?" />
         </View>
         <View style={styles.illustrationWrap}>
             <ActivityIndicator size="large" color={onColor} />
@@ -162,7 +162,7 @@ export default function App({
           </View>
         <Text>Nearby</Text>
         <ScrollView>
-          <RouteList routes={routes}></RouteList>
+          <RouteList routes={routes} dataState='success'></RouteList>
         </ScrollView>
       </View>
     </PaperProvider>

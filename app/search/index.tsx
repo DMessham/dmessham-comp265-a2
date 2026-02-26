@@ -46,11 +46,7 @@ type stopListItem = {
     transitID: string;
 };
 
-type Props = {
-    city: string;
-    condition: string;
-    routes: routesRow[];
-};
+let dataState = "empty"
 
 
 const transitFeedID = "o-c9k0-saskatoontransit"; //saskatoon transit
@@ -136,7 +132,7 @@ export default function App({
                         placeholder="Search Bus Routes & Stops" />
                 </View>
                 <ScrollView>
-                    <RouteList routes={routes}></RouteList>
+                    <RouteList routes={routes} dataState={dataState}></RouteList>
                 </ScrollView>
             </View>
         </PaperProvider>
