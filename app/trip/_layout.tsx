@@ -3,22 +3,19 @@ import { StatusBar } from 'expo-status-bar';
 
 export default function RootLayout() {
   return (
-    <>
     <Stack
     screenOptions={{
       headerStyle: {
-        backgroundColor: '#11240e',
+        backgroundColor: '#31641e',
       },
-      headerShadowVisible: true,
-      headerTintColor: '#efe',
+      headerTintColor: '#fff',
       headerTitleStyle: {
         fontWeight: 'bold',
       },
-    }}>    
-    <Stack.Screen name="index" options={{title: 'Home' }} />
-    <Stack.Screen name="details" />
+    }}>
+    
+    <Stack.Screen name="index" options={{title: 'Trip' }} />
+    <Stack.Screen name="activeTripView" options={{title: 'Active Trip',  headerShown: false,  }} />
     </Stack>
-    <StatusBar/>
-    </>
   );
 }

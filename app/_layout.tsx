@@ -30,7 +30,7 @@ export default function RootLayout() {
       <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search'  }} />
       <Tabs.Screen name="trip" options={{ headerShown: false, title: 'Trip'  }} />
       <Tabs.Screen name="+not-found" options={{ href: null, title: 'TransitTrack: ERROR' }} />
-      <Tabs.Screen name="modal" options={{ href: null, title: 'TransitTrack: ERROR' }} />
+      <Tabs.Screen name="modal" options={{ href: null, title: 'Alert' }} />
     </Tabs>
       <StatusBar style="auto" />
     </ThemeProvider>

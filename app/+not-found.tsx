@@ -8,7 +8,7 @@ export default function NotFoundScreen() {
       <View style={styles.container}>
         <Text style={styles.titleText}>Error!</Text>
         <Text style={styles.labelText}>There's nothing here...</Text>
-        <Link href="/" style={styles.button}>
+        <Link href="/home" style={styles.button}>
           Go back to Home screen!
         </Link>
       </View>

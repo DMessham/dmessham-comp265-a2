@@ -1,24 +1,43 @@
+import { Link, Stack } from 'expo-router';
+import {
+    Appbar,
+    Button,
+    Divider,
+    IconButton,
+    List,
+    Switch,
+    Text,
+    TextInput,
+    ProgressBar,
+    MD3DarkTheme as DefaultTheme,
+    PaperProvider
+} from "react-native-paper";
+import { paperDark } from '../../constants/theme';
 import { Spacing } from "../../constants/theme";
-import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View, Text } from "react-native";
-export default function SettingsScreen() {
+import * as React from "react";
+import { useState } from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+
+const theme = {
+    ...DefaultTheme,
+    colors: paperDark.colors, // Copy it from the color codes scheme and then use it here
+};
+
+
+export default function Details() {
     const router = useRouter();
-  const params = useLocalSearchParams();
+    const params = useLocalSearchParams();
+
     return (
         <>
-            <Stack.Screen
-                options={{
-                    title: params.name,
-                    headerStyle: { backgroundColor: 'lightblue', },
-                    headerBackVisible: true,
-                }}
-            />
-            <View style={styles.container}>
-                <Text style={styles.titleText}>Settings Screen</Text>
-                <Text style={styles.text}>Settings item</Text>
+            <PaperProvider theme={theme}>
+                <View style={styles.container}>
+                    <Text style={styles.titleText}>Settings Screen</Text>
+                    <Text style={styles.text}>Settings item <Switch /></Text>
 
-            </View>
-
+                </View>
+            </PaperProvider>
         </>
     );
 }

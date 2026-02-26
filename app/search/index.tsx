@@ -16,12 +16,16 @@ import { paperDark } from '../../constants/theme';
 import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
+import { showAlert, SearchList, routes } from '@/components/ui/common';
 import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
 
 const theme = {
   ...DefaultTheme,
   colors: paperDark.colors, // Copy it from the color codes scheme and then use it here
 };
+
+let results = null
+
 export default function SearchScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -35,12 +39,15 @@ export default function SearchScreen() {
       />
       <View style={styles.container}>
         <Text style={styles.titleText}>Detailed Search</Text>
-        <Link href="/profile/Settings" style={styles.button}>
-          Settings
-        </Link>
-        <Link href="/profile/About" style={styles.button}>
-          About TransitTrac
-        </Link>
+        <View>
+          <TextInput
+            onSubmitEditing={() => showAlert('Search not yet implemented')}
+            enterKeyHint="search"
+            returnKeyType="search"
+            inputMode="search"
+            placeholder="Search Bus Routes & Stops" />
+        </View>
+        <SearchList routes={routes}></SearchList>
       </View>
     </>
   );
