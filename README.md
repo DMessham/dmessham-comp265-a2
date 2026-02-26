@@ -9,7 +9,7 @@ TransitTrack - bus navigation & tracking for android
 - Home (frequents, Favorites & nearby)
 - Search
 - Map
-- Settings
+- Account/settings
 
 ## Modals
 - Route Selection

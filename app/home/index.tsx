@@ -17,7 +17,8 @@ import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { showAlert, SearchList, routes, RouteList } from '@/components/ui/common';
 
 const theme = {
   ...DefaultTheme,
@@ -58,15 +59,6 @@ const apiBaseURL = 'https://transit.land/api/v2/rest'
 
 let onColor = "rgb(95,155,95)"
 
-function showAlert(message: string) {
-  if (Platform.OS === 'web') {
-    window.alert(message);
-  } else {
-    Alert.alert(message);
-  }
-}
-
-
 export default function App({
   city = "Saskatoon",
 
@@ -104,115 +96,73 @@ export default function App({
   return (
 
     <PaperProvider theme={theme}>
-      <View>
-        <View style={styles.hero}>
-
-          {/* <ActivityIndicator size="large" color={onColor} /> */}
-          <Text style={styles.hero}>It's taking a while to get realtime info...</Text>
-          <ProgressBar indeterminate />
-          <View style={styles.illustrationWrap}>
+      <Appbar.Header style={styles.appbar}>
+        <View style={styles.topRow}>
+          <View style={styles.tempRow}>
+            <Image
+              style={styles.logo}
+              source={{
+                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+              }}
+            />
+            <Text variant="displaySmall" style={styles.tempText}>
+              TransitTrak
+            </Text>
+            <Text variant="labelLarge" style={styles.degreeMark}>
+              a0.2.0
+            </Text>
           </View>
-          {/* TODO: add map */}
+
+          <View style={styles.cityRow}>
+            <Text variant="labelLarge" style={styles.cityText}>
+              LOCATION
+            </Text>
+
+            <IconButton
+              icon="map-marker"
+              size={18}
+              iconColor="rgba(255,255,255,0.95)"
+              style={styles.iconBtnTight}
+            // onPress={onOpenCityMenu}
+            />
+            <Text variant="labelLarge" style={styles.cityText}>Offline Mode</Text>
+            <Switch
+              ios_backgroundColor="#3e3e3e"
+              onValueChange={toggleSwitch}
+              value={isOfflineMode}
+            />
+            <IconButton
+              icon="cog-outline"
+              size={22}
+              iconColor="rgba(255,255,255,0.95)"
+              style={styles.iconBtnTight}
+            // onPress={onPressSettings}
+            />
+          </View>
+
         </View>
+      </Appbar.Header>
+      <View>
+        
+      <ScrollView>
+          <Text>MAP GOES HERE </Text>
+        </ScrollView>
         <View>
           <TextInput
             onSubmitEditing={() => showAlert('Search not yet implemented')}
             enterKeyHint="search"
             returnKeyType="search"
             inputMode="search"
-            placeholder="Search Bus Routes & Stops" />
+            placeholder="Where do you want to go" />
         </View>
+        <View style={styles.illustrationWrap}>
+            <ActivityIndicator size="large" color={onColor} />
+            <Text style={styles.hero}>It's taking a while to get realtime info...</Text>
+            <ProgressBar  indeterminate />
+          </View>
+        <Text>Nearby</Text>
         <ScrollView>
-          {/* routes List */}
-          {routes.map((row, idx) => (
-            <View style={styles.routesCard}>
-              <React.Fragment key={row.name}>
-                <List.Item
-                  title={row.name}
-                  titleStyle={styles.routesDay}
-                  left={() => (
-                    <Text style={styles.routesTemps}>
-                      {row.routeNumber}
-
-                    </Text>
-                  )}
-                  right={() => (
-                    <Text style={styles.routesTemps}>
-                      In {row.arrivalTime} & {row.nextArrivalTime} Minutes
-                      {/* Show on map */}
-                    </Text>
-
-                  )}
-                  style={styles.routesRow}
-                />
-
-                <View style={styles.stopsCard}>
-                  {/* TODO: make hide/show functions work */}
-                  <React.Fragment key={`${row.name}-stoplistHeader`}>
-                    <List.Item
-                      title={`${row.stops.length} stops`}
-                      titleStyle={styles.routesTemps}
-                      right={() => (
-                        <>
-                          <Link
-                            style={styles.button}
-                            href={{
-                              pathname: '/home/details',
-                              params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
-                            }}> Show On Map</Link>
-                          <IconButton
-                            icon="chevron-down"
-                            size={22}
-                            iconColor="rgba(255,255,255,0.95)"
-
-                            style={styles.iconBtnTight}
-                          // onPress={onPressSettings}
-                          />
-                        </>
-
-                      )}
-
-
-
-                      style={styles.stoplistHeaderRow}
-                    />
-
-                  </React.Fragment>
-                  {/* stop list */}
-                  {row.stops.map((row2, idx) => (
-                    <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
-                      <List.Item
-                        title={row2.name}
-                        titleStyle={styles.routesDay}
-                        left={() => (
-                          // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
-                          //     style={styles.iconBtnTight} />
-                          <Image
-                            style={styles.stopIcon}
-                            source={{
-                              uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                            }}
-                          />
-                        )}
-                        right={() => (
-                          <Text style={styles.routesTemps}>
-                            In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
-                          </Text>
-
-                        )}
-                        style={styles.routesRow}
-                      />
-                      {idx < row.stops.length - 1 ? (
-                        <Divider style={styles.divider} />
-                      ) : null}
-                    </React.Fragment>
-                  ))}
-                </View>
-
-              </React.Fragment>
-            </View>
-
-          ))}
+          <RouteList routes={routes}></RouteList>
         </ScrollView>
       </View>
     </PaperProvider>

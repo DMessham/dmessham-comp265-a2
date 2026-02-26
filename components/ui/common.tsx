@@ -7,7 +7,6 @@ import {
     List,
     Switch,
     Text,
-    TextInput,
     ProgressBar,
     MD3DarkTheme as DefaultTheme,
     PaperProvider
@@ -17,7 +16,7 @@ import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, TextInput, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
 
 const theme = {
     ...DefaultTheme,
@@ -83,228 +82,200 @@ export let routes = [
     }
 ]
 
-export function RouteList({routes}:Props) {
 
-    const [isOfflineMode, setIsOfflineMode] = useState(offlineModeStart);
-
-    const [routeSearchQuery, onChangeRouteSeach] = React.useState('');
-    const [stopSearchQuery, onChangeStopSeach] = React.useState('');
-
-    const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
+export function RouteList({ routes }: Props) {
     return (
-
         <PaperProvider theme={theme}>
             <View>
-                <ScrollView>
-                    {/* routes List */}
-                    {routes.map((row, idx) => (
-                        <View style={styles.routesCard}>
-                            <React.Fragment key={row.name}>
-                                <List.Item
-                                    title={row.name}
-                                    titleStyle={styles.routesDay}
-                                    left={() => (
-                                        <Text style={styles.routesTemps}>
-                                            {row.routeNumber}
+                {/* routes List */}
+                {routes.map((row, idx) => (
+                    <View style={styles.routesCard}>
+                        <React.Fragment key={row.name}>
+                            <List.Item
+                                title={row.name}
+                                titleStyle={styles.routesDay}
+                                left={() => (
+                                    <Text style={styles.routesTemps}>
+                                        {row.routeNumber}
 
-                                        </Text>
-                                    )}
-                                    right={() => (
-                                        <Text style={styles.routesTemps}>
-                                            In {row.arrivalTime} & {row.nextArrivalTime} Minutes
-                                            {/* Show on map */}
-                                        </Text>
+                                    </Text>
+                                )}
+                                right={() => (
+                                    <Text style={styles.routesTemps}>
+                                        In {row.arrivalTime} & {row.nextArrivalTime} Minutes
+                                        {/* Show on map */}
+                                    </Text>
 
-                                    )}
-                                    style={styles.routesRow}
-                                />
+                                )}
+                                style={styles.routesRow}
+                            />
+                            <View style={styles.stopsCard}>
+                                {/* TODO: make hide/show functions work */}
+                                <React.Fragment key={`${row.name}-stoplistHeader`}>
+                                    <List.Item
+                                        title={`${row.stops.length} stops`}
+                                        titleStyle={styles.routesTemps}
+                                        right={() => (
+                                            <>
+                                                <Link
+                                                    style={styles.button}
+                                                    href={{
+                                                        pathname: '/home/details',
+                                                        params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
+                                                    }}> Show On Map</Link>
+                                                <IconButton
+                                                    icon="chevron-down"
+                                                    size={22}
+                                                    iconColor="rgba(255,255,255,0.95)"
 
-                                <View style={styles.stopsCard}>
-                                    {/* TODO: make hide/show functions work */}
-                                    <React.Fragment key={`${row.name}-stoplistHeader`}>
+                                                    style={styles.iconBtnTight}
+                                                // onPress={onPressSettings}
+                                                />
+                                            </>
+
+                                        )}
+                                        style={styles.stoplistHeaderRow}
+                                    />
+                                </React.Fragment>
+                                {/* stop list */}
+                                {row.stops.map((row2, idx) => (
+                                    <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
                                         <List.Item
-                                            title={`${row.stops.length} stops`}
-                                            titleStyle={styles.routesTemps}
+                                            title={row2.name}
+                                            titleStyle={styles.routesDay}
+                                            left={() => (
+                                                // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
+                                                //     style={styles.iconBtnTight} />
+                                                <Image
+                                                    style={styles.stopIcon}
+                                                    source={{
+                                                        uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                                                    }}
+                                                />
+                                            )}
                                             right={() => (
-                                                <>
-                                                    <Link
-                                                        style={styles.button}
-                                                        href={{
-                                                            pathname: '/home/details',
-                                                            params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
-                                                        }}> Show On Map</Link>
-                                                    <IconButton
-                                                        icon="chevron-down"
-                                                        size={22}
-                                                        iconColor="rgba(255,255,255,0.95)"
-
-                                                        style={styles.iconBtnTight}
-                                                    // onPress={onPressSettings}
-                                                    />
-                                                </>
+                                                <Text style={styles.routesTemps}>
+                                                    In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
+                                                </Text>
 
                                             )}
-
-
-
-                                            style={styles.stoplistHeaderRow}
+                                            style={styles.routesRow}
                                         />
-
+                                        {idx < row.stops.length - 1 ? (
+                                            <Divider style={styles.divider} />
+                                        ) : null}
                                     </React.Fragment>
-                                    {/* stop list */}
-                                    {row.stops.map((row2, idx) => (
-                                        <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
-                                            <List.Item
-                                                title={row2.name}
-                                                titleStyle={styles.routesDay}
-                                                left={() => (
-                                                    // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
-                                                    //     style={styles.iconBtnTight} />
-                                                    <Image
-                                                        style={styles.stopIcon}
-                                                        source={{
-                                                            uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                                                        }}
-                                                    />
-                                                )}
-                                                right={() => (
-                                                    <Text style={styles.routesTemps}>
-                                                        In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
-                                                    </Text>
+                                ))}
+                            </View>
 
-                                                )}
-                                                style={styles.routesRow}
-                                            />
-                                            {idx < row.stops.length - 1 ? (
-                                                <Divider style={styles.divider} />
-                                            ) : null}
-                                        </React.Fragment>
-                                    ))}
-                                </View>
-
-                            </React.Fragment>
-                        </View>
-
-                    ))}
-                </ScrollView>
+                        </React.Fragment>
+                    </View>
+                ))}
             </View>
         </PaperProvider>
     );
 }
 
 
-export function SearchList({routes}:Props) {
-
+export function SearchList({ routes }: Props) {
     const [isOfflineMode, setIsOfflineMode] = useState(offlineModeStart);
 
     const [routeSearchQuery, onChangeRouteSeach] = React.useState('');
     const [stopSearchQuery, onChangeStopSeach] = React.useState('');
 
     const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
+
     return (
 
         <PaperProvider theme={theme}>
-            <View>
-                <View>
-                    <TextInput
-                        onSubmitEditing={() => showAlert('Search not yet implemented')}
-                        enterKeyHint="search"
-                        returnKeyType="search"
-                        inputMode="search"
-                        placeholder="Search Bus Routes & Stops" />
+            <Appbar.Header style={styles.appbar}>
+                <View style={styles.topRow}>
+                    <View style={styles.tempRow}>
+                            <Image
+                            style={styles.logo}
+                            source={{
+                            uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                            }}
+                        />
+                        <Text variant="displaySmall" style={styles.tempText}>
+                            TransitTrak
+                        </Text>
+                        <Text variant="labelLarge" style={styles.degreeMark}>
+                            a0.2.0
+                        </Text>
+                    </View>
+
+                    <View style={styles.cityRow}>
+                        <Text variant="labelLarge" style={styles.cityText}>
+                            {city.toUpperCase()}
+                        </Text>
+
+                        <IconButton
+                            icon="map-marker"
+                            size={18}
+                            iconColor="rgba(255,255,255,0.95)"
+                            style={styles.iconBtnTight}
+                        // onPress={onOpenCityMenu}
+                        />
+                        <Text variant="labelLarge" style={styles.cityText}>Offline Mode</Text>
+                        <Switch
+                            ios_backgroundColor="#3e3e3e"
+                            onValueChange={toggleSwitch}
+                            value={isOfflineMode}
+                        />
+                        <IconButton
+                            icon="cog-outline"
+                            size={22}
+                            iconColor="rgba(255,255,255,0.95)"
+                            style={styles.iconBtnTight}
+                        // onPress={onPressSettings}
+                        />
+                    </View>
+
                 </View>
-                <ScrollView>
-                    {/* routes List */}
-                    {routes.map((row, idx) => (
-                        <View style={styles.routesCard}>
-                            <React.Fragment key={row.name}>
-                                <List.Item
-                                    title={row.name}
-                                    titleStyle={styles.routesDay}
-                                    left={() => (
-                                        <Text style={styles.routesTemps}>
-                                            {row.routeNumber}
+            </Appbar.Header>
 
-                                        </Text>
-                                    )}
-                                    right={() => (
-                                        <Text style={styles.routesTemps}>
-                                            In {row.arrivalTime} & {row.nextArrivalTime} Minutes
-                                            {/* Show on map */}
-                                        </Text>
-
-                                    )}
-                                    style={styles.routesRow}
-                                />
-
-                                <View style={styles.stopsCard}>
-                                    {/* TODO: make hide/show functions work */}
-                                    <React.Fragment key={`${row.name}-stoplistHeader`}>
-                                        <List.Item
-                                            title={`${row.stops.length} stops`}
-                                            titleStyle={styles.routesTemps}
-                                            right={() => (
-                                                <>
-                                                    <Link
-                                                        style={styles.button}
-                                                        href={{
-                                                            pathname: '/home/details',
-                                                            params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
-                                                        }}> Show On Map</Link>
-                                                    <IconButton
-                                                        icon="chevron-down"
-                                                        size={22}
-                                                        iconColor="rgba(255,255,255,0.95)"
-
-                                                        style={styles.iconBtnTight}
-                                                    // onPress={onPressSettings}
-                                                    />
-                                                </>
-
-                                            )}
-
-
-
-                                            style={styles.stoplistHeaderRow}
-                                        />
-
-                                    </React.Fragment>
-                                    {/* stop list */}
-                                    {row.stops.map((row2, idx) => (
-                                        <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
-                                            <List.Item
-                                                title={row2.name}
-                                                titleStyle={styles.routesDay}
-                                                left={() => (
-                                                    // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
-                                                    //     style={styles.iconBtnTight} />
-                                                    <Image
-                                                        style={styles.stopIcon}
-                                                        source={{
-                                                            uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                                                        }}
-                                                    />
-                                                )}
-                                                right={() => (
-                                                    <Text style={styles.routesTemps}>
-                                                        In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
-                                                    </Text>
-
-                                                )}
-                                                style={styles.routesRow}
-                                            />
-                                            {idx < row.stops.length - 1 ? (
-                                                <Divider style={styles.divider} />
-                                            ) : null}
-                                        </React.Fragment>
-                                    ))}
-                                </View>
-
-                            </React.Fragment>
-                        </View>
-
-                    ))}
-                </ScrollView>
+            {/* Hero Section */}
+            <View style={styles.hero}>
+                
+                    <ActivityIndicator size="large"/>
+                    <Text  style={styles.hero}>It's taking a while to load maps...</Text>
+                    <View style={styles.illustrationWrap}>
+                </View>
+                {/* TODO: add map */}
+            </View>
+            <View>
+                <TextInput
+                    onChangeText={onChangeRouteSeach}
+                    onSubmitEditing={() => showAlert('Route Search not yet implemented')}
+                    value={routeSearchQuery}
+                    enterKeyHint="search"
+                    returnKeyType="search"
+                    inputMode="search"
+                    placeholder="Search Bus Routes" />
+            </View>
+            <View>
+                <TextInput
+                    onChangeText={onChangeStopSeach}
+                    onSubmitEditing={() => showAlert('Stop Search not yet implemented')}
+                    value={stopSearchQuery}
+                    enterKeyHint="search"
+                    returnKeyType="search"
+                    inputMode="search"
+                    placeholder="Search Bus Stops" />
+                {/* TODO add search logic */}
+            </View>
+            <View>
+                <TextInput
+                    onSubmitEditing={() => showAlert('Search not yet implemented')}
+                    enterKeyHint="search"
+                    returnKeyType="search"
+                    inputMode="search"
+                    placeholder="Search Bus Routes & Stops" />
+            </View>
+            <View>
+                {/* routes List */}
+                <RouteList routes={routes}></RouteList>
             </View>
         </PaperProvider>
     );

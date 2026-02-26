@@ -28,7 +28,7 @@ export default function RootLayout() {
       <Tabs.Screen name="home" options={{headerShown: false, title: 'TransitTrack' }} />
       <Tabs.Screen name="profile" options={{ headerShown: false, title: 'You'  }} />
       <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search'  }} />
-      <Tabs.Screen name="trip" options={{ headerShown: false, title: 'Trip'  }} />
+      <Tabs.Screen name="trip" options={{ headerShown: false, title: 'Map'  }} />
       <Tabs.Screen name="+not-found" options={{ href: null, title: 'TransitTrack: ERROR' }} />
       <Tabs.Screen name="modal" options={{ href: null, title: 'Alert' }} />
     </Tabs>
