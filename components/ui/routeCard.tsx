@@ -13,8 +13,8 @@ import {
   MD3DarkTheme as DefaultTheme,
   PaperProvider
 } from "react-native-paper";
-import { paperDark } from '../constants/theme';
-import { Spacing } from "../constants/theme";
+import { paperDark } from '../../constants/theme';
+import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
