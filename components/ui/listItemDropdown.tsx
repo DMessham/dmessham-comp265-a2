@@ -15,9 +15,31 @@ import {
     PaperProvider
   } from "react-native-paper";
 
-export default function Details() {
-    const router = useRouter();
-    const params = useLocalSearchParams();
+type listItemProps = [
+    title: string,
+    state: 'loading' | 'error' | 'empty' | 'success',
+    hasDropDown: boolean,
+    dropDownOpen: boolean,
+    text: string,
+    type: 'route' | 'stop' | 'setting' | 'step' | null,
+    children:React.ReactNode
+
+]
+
+export default function listItem( {title='no title', state='error', hasDropDown=false, dropDownOpen=false, text='no text', type=null, children = null} : 
+    { title: string, state: 'loading' | 'error' | 'empty' | 'success', hasDropDown: boolean, dropDownOpen: boolean, text: string, type: 'route' | 'stop' | 'setting' | 'step' | null, children:React.ReactNode}) 
+    {    const router = useRouter();
+    const params = useLocalSearchParams();}
+
+    if (state = 'loading'){
+
+    }else if (state = 'empty'){
+        
+    }else if (item.state = 'error'){
+        
+    } else if (item.state = 'loading'){
+        
+    } else 
 
     return (
         <View style={styles.container}>

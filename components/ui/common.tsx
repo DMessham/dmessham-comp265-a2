@@ -44,7 +44,7 @@ type stopListItem = {
     transitID: string;
 };
 
-type Props = {
+export type Props = {
     routes: routesRow[];
 
     dataState: "loading" | "error" | "empty" | "success";

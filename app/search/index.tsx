@@ -18,7 +18,7 @@ import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
-import { showAlert, SearchList, routes, RouteList } from '@/components/ui/common';
+import { showAlert, SearchList, routes, RouteList, Props } from '@/components/ui/common';
 
 const theme = {
     ...DefaultTheme,

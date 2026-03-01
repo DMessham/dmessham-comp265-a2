@@ -33,8 +33,8 @@ let deviceState= {
     },
     networkState:{
         isOnline:true,
-        connection:"",//'data', 'dataRoaming', 'wifi', airplane, null
-        connectionDataType:"", // 2g, lte, 5Guwb, 5G, 4g,
+        connection:"data",//'data', 'dataRoaming', 'wifi', airplane, null
+        connectionDataType:"lte", // 2g, lte, 5Guwb, 5G, 4g,
     },
     emergencyMode:{
         active: false,
@@ -49,34 +49,33 @@ let config = {
         time: "12h" // 
     },
     alerts: {
-
+        playOnSpeaker: false,
     },
     darkmode: true,
-    emergencyMode: false,
+    emergencyMode: false
 }
 
-export function getSettings(request){
+export function getSettings(request : string){
     switch(request){
-        case distUnit:
-            return()
-        case timeUnit:
-            return()
-        case use24Time:
+        case 'distUnit':
+            return("km")
+        case 'timeUnit':
+            return("12h")
+        case 'use24Time':
             if(config.units.time == '24h'){
                 return true;
             }
             else{
                 return false;
             }
-        case use12Time:
+        case 'use12Time':
             return(config.units.time == '12h')
-        case isEmergency:
-            return(deviceState)
-        case timeUnit:
-        case distUnit:
-        case distUnit:
+        case 'isEmergency':
+            return(false)
+        default:
+            return(null)
     }
 }
-export function listSettings(request){
+export function listSetting(request : string){
 
 }
