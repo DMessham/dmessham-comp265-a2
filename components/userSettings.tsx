@@ -77,17 +77,17 @@ export function getSettings(request: string) {
             return (null)
     }
 }
-export function ListSetting(value: string, title: string, text: string, children: React.ReactElement) {
+export function ListSetting({value='fallback', title="setting title", text="setting description"}:{value: string, title: string, text: string}) {
     return (
-        <View>
+        <>
             <Text>Title: {title}</Text>
             <Text>Desc: {text}</Text>
-            <Text>Current value: {value}</Text>
-        </View>
+            <Text>Current value: {value.toString()}</Text>
+        </>
     )
 }
 
-export function ToggleItem({item, title = "listItem title", text = "listItem description"}:{item: boolean, title: string, text: string}) {
+export function ToggleItem({item = false, title = "listItem title", text = "listItem description"}:{item: boolean, title: string, text: string}) {
     const [isOfflineMode, setIsOfflineMode] = useState(item);
     const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
     return (

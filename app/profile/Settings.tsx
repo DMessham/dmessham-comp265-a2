@@ -27,6 +27,7 @@ const theme = {
 };
 
 let exampleBool = false
+let exampleString = "Hello, World!"
 
 
 export default function Details() {
@@ -41,9 +42,9 @@ export default function Details() {
                     <Text style={styles.text}>Settings item </Text>
                     <View>
                         <Text>Example setting</Text>
-                        {/* <BoolSwitch value={exampleBool} /> */}
+                        <BoolSwitch value={exampleBool} />
                     </View>
-                    <ListSetting title="example bool" text="description" value={exampleBool}></ListSetting>
+                    <ListSetting title="example bool" text="description" value={exampleString}></ListSetting>
                 </View>
             </PaperProvider>
         </>

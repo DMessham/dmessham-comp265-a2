@@ -375,7 +375,7 @@ export function SearchList({ routes }: Props) {
     );
 }
 
-export function BoolSwitch(value: boolean) {
+export function BoolSwitch({value}:{value: boolean}) {
    function toggleSwitch(){
         if (value){
             value=false
@@ -395,7 +395,7 @@ export function BoolSwitch(value: boolean) {
     )
 }
 
-export function StringSwitch(value:string,onValue:string='on', offValue:string='off') {
+export function StringSwitch({value = "On", onValue = 'On', offValue = "Off"}:{value:string,onValue:string, offValue:string}) {
     let item=null
     if (value==onValue){
         item=true
