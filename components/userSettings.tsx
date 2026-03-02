@@ -88,18 +88,15 @@ export function ListSetting({value='fallback', title="setting title", text="sett
 }
 
 export function ToggleItem({item = false, title = "listItem title", text = "listItem description"}:{item: boolean, title: string, text: string}) {
-    const [isOfflineMode, setIsOfflineMode] = useState(item);
-    const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
-    return (
+     return (
 
         <View>
-            <Text>{title}</Text>
-            <Text>{text}</Text>
-            <Switch
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={item}
-            />
+            <List.Item
+                title={title}
+                description={text}
+                left={props => <List.Icon {...props} icon="folder" />}
+                right={()=> <BoolSwitch value={item} />}
+                    />
         </View>
     )
 }

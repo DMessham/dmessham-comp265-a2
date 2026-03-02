@@ -375,24 +375,12 @@ export function SearchList({ routes }: Props) {
     );
 }
 
-export function BoolSwitch({value}:{value: boolean}) {
-   function toggleSwitch(){
-        if (value){
-            value=false
-        } else{
-            value=true
-        }
-        return
-    }
-    return (
-        <>
-        <Switch
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={value}
-        />
-        </>
-    )
+export function BoolSwitch({value=false}:{value: boolean}) {
+    const [isSwitchOn, setIsSwitchOn] = React.useState(value);
+
+    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  
+    return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
 }
 
 export function StringSwitch({value = "On", onValue = 'On', offValue = "Off"}:{value:string,onValue:string, offValue:string}) {

@@ -5,6 +5,7 @@ import {
     Divider,
     IconButton,
     List,
+    ListSectionProps,
     Switch,
     Text,
     TextInput,
@@ -16,6 +17,7 @@ import { paperDark } from '../../constants/theme';
 import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
+
 import { deviceState, config, getSettings, ListSetting, ToggleItem } from '@/components/userSettings';
 import { BoolSwitch, StringSwitch } from '@/components/ui/common';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -41,10 +43,18 @@ export default function Details() {
                     <Text style={styles.titleText}>Settings Screen</Text>
                     <Text style={styles.text}>Settings item </Text>
                     <View>
-                        <Text>Example setting</Text>
+                        <Text>Example Bool setting</Text>
                         <BoolSwitch value={exampleBool} />
                     </View>
-                    <ListSetting title="example bool" text="description" value={exampleString}></ListSetting>
+                    <ListSetting title="example string setting" text="description" value={exampleString}></ListSetting>
+                        
+                    
+                    <List.Item
+                        title="First Item"
+                        description="Item description"
+                        left={props => <List.Icon {...props} icon="folder" />}
+                        right={props => <List.Icon {...props} icon="folder" />}
+                    />
                 </View>
             </PaperProvider>
         </>
