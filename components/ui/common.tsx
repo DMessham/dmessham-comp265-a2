@@ -375,20 +375,27 @@ export function SearchList({ routes }: Props) {
     );
 }
 
-export function boolSwitch(item: boolean) {
-    const [isOfflineMode, setIsOfflineMode] = useState(item);
-    const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
+export function BoolSwitch(value: boolean) {
+   function toggleSwitch(){
+        if (value){
+            value=false
+        } else{
+            value=true
+        }
+        return
+    }
     return (
-
-            <Switch
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={item}
-            />
+        <>
+        <Switch
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={value}
+        />
+        </>
     )
 }
 
-export function stringSwitch(value:string,onValue:string='on', offValue:string='off') {
+export function StringSwitch(value:string,onValue:string='on', offValue:string='off') {
     let item=null
     if (value==onValue){
         item=true
@@ -406,15 +413,19 @@ export function stringSwitch(value:string,onValue:string='on', offValue:string='
     }
     if (item !=null){
         return (
+            <>
             <Switch
                 ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={item}
             />
+            </>
     )
     } else{
         return(
+            <>
             <Text>ERROR '{value}' is Invalid</Text>
+            </>
         )
     }
 }

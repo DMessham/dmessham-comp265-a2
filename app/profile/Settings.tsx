@@ -16,6 +16,8 @@ import { paperDark } from '../../constants/theme';
 import { Spacing } from "../../constants/theme";
 import * as React from "react";
 import { useState } from 'react';
+import { deviceState, config, getSettings, ListSetting, ToggleItem } from '@/components/userSettings';
+import { BoolSwitch, StringSwitch } from '@/components/ui/common';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
 
@@ -23,6 +25,8 @@ const theme = {
     ...DefaultTheme,
     colors: paperDark.colors, // Copy it from the color codes scheme and then use it here
 };
+
+let exampleBool = false
 
 
 export default function Details() {
@@ -34,8 +38,12 @@ export default function Details() {
             <PaperProvider theme={theme}>
                 <View style={styles.container}>
                     <Text style={styles.titleText}>Settings Screen</Text>
-                    <Text style={styles.text}>Settings item <Switch /></Text>
-
+                    <Text style={styles.text}>Settings item </Text>
+                    <View>
+                        <Text>Example setting</Text>
+                        {/* <BoolSwitch value={exampleBool} /> */}
+                    </View>
+                    <ListSetting title="example bool" text="description" value={exampleBool}></ListSetting>
                 </View>
             </PaperProvider>
         </>

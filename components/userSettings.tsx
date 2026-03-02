@@ -13,6 +13,7 @@ import {
 } from "react-native-paper";
 import { paperDark } from '../constants/theme';
 import { Spacing } from "../constants/theme";
+import { BoolSwitch, StringSwitch } from '@/components/ui/common';
 import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -23,7 +24,7 @@ const theme = {
     colors: paperDark.colors, // Copy it from the color codes scheme and then use it here
 };
 
-let deviceState = {
+export let deviceState = {
     headphonesConnected: true,
     batteryState: {
         level: 100,
@@ -42,7 +43,7 @@ let deviceState = {
     }
 }
 
-let config = {
+export let config = {
     units: {
         distance: "km",
         distanceSmall: "meter",
@@ -76,11 +77,8 @@ export function getSettings(request: string) {
             return (null)
     }
 }
-export function listSetting(value: string, title: string = "toggleItem title", text: string = "toggleItem description") {
-
-
+export function ListSetting(value: string, title: string, text: string, children: React.ReactElement) {
     return (
-        
         <View>
             <Text>Title: {title}</Text>
             <Text>Desc: {text}</Text>
@@ -89,7 +87,7 @@ export function listSetting(value: string, title: string = "toggleItem title", t
     )
 }
 
-export function toggleItem(item: boolean, title: string = "toggleItem title", text: string = "toggleItem description") {
+export function ToggleItem({item, title = "listItem title", text = "listItem description"}:{item: boolean, title: string, text: string}) {
     const [isOfflineMode, setIsOfflineMode] = useState(item);
     const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
     return (
