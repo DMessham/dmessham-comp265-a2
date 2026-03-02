@@ -18,6 +18,7 @@ import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import MapView from '@/components/ui/mapView';
 
 const theme = {
   ...DefaultTheme,
@@ -31,15 +32,7 @@ export default function Details() {
 
   return (
     <PaperProvider theme={theme}>
-      <View style={styles.container}>
-        <Text
-        style={styles.text}
-          onPress={() => {
-            router.setParams({ name: 'Updated' });
-          }}>
-          TODO: show the {params.dataType} for {params.objType} {params.onestopID}
-        </Text>
-      </View>
+      < MapView></MapView>
     </PaperProvider>
   );
 }
@@ -49,13 +42,7 @@ const apiBaseURL = 'https://transit.land/api/v2/rest'
 
 let onColor = "rgb(95,155,95)"
 
-function showAlert(message: string) {
-  if (Platform.OS === 'web') {
-    window.alert(message);
-  } else {
-    Alert.alert(message);
-  }
-}
+
 
 const styles = StyleSheet.create({
   container: {

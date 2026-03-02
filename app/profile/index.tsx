@@ -1,7 +1,22 @@
+import { showAlert } from "@/components/ui/common";
 import { Spacing } from "../../constants/theme";
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View, Text } from "react-native";
-
+import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Appbar,
+  Button,
+  Divider,
+  IconButton,
+  List,
+  ListSectionProps,
+  Switch,
+  Text,
+  TextInput,
+  ProgressBar,
+  SegmentedButtons,
+  MD3DarkTheme as DefaultTheme,
+  PaperProvider
+} from "react-native-paper";
 export default function AboutScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -18,9 +33,9 @@ export default function AboutScreen() {
         <Link href="/profile/About" style={styles.button}>
           Your Account
         </Link>
-        <Link href="/profile/About" style={styles.button}>
+        <Button mode="text" compact={true} buttonColor="#11243e"  onPress={() =>showAlert('Search not yet implemented')} style={styles.button}>
           Log Out
-        </Link>
+        </Button>
         <Link href="/profile/About" style={styles.button}>
           About TransitTrac
         </Link>
