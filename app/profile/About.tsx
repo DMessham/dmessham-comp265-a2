@@ -9,6 +9,10 @@ export default function AboutScreen() {
   return (
     <>
       <View style={styles.container}>
+      <Image
+              source={require('@/assets/images/logo.png')}
+              style={styles.logo}
+            />
         <Text style={styles.titleText}>TransitTrac</Text>
         <Text style={styles.labelText}>React Native Edition</Text>
         <Text style={styles.text}>Version 0.2.1</Text>
@@ -45,4 +49,8 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     color: '#fff',
   },
+  logo: {
+    width: 256,
+    height: 256
+  }
 });

@@ -19,6 +19,8 @@ import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Alert, TextInput, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
 
+
+
 const theme = {
     ...DefaultTheme,
     colors: paperDark.colors, // Copy it from the color codes scheme and then use it here

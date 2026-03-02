@@ -18,7 +18,8 @@ import * as React from "react";
 import { useState } from 'react';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, View } from "react-native";
-import { showAlert, SearchList, routes, RouteList } from '@/components/ui/common';
+import { showAlert, SearchList, routes, RouteList, versionString, city } from '@/components/ui/common';
+import { deviceState, config } from '@/components/userSettings';
 
 const theme = {
   ...DefaultTheme,
@@ -51,7 +52,6 @@ type Props = {
   condition: string;
   routes: routesRow[];
 };
-
 
 const transitFeedID = "o-c9k0-saskatoontransit"; //saskatoon transit
 
@@ -100,22 +100,22 @@ export default function App({
         <View style={styles.topRow}>
           <View style={styles.tempRow}>
             <Image
+              source={require('@/assets/images/logo.png')}
               style={styles.logo}
-              source={{
-                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-              }}
             />
             <Text variant="displaySmall" style={styles.tempText}>
               TransitTrak
             </Text>
             <Text variant="labelLarge" style={styles.degreeMark}>
-              a0.2.0
+              {versionString}
             </Text>
           </View>
 
+          <Text variant="labelLarge" style={styles.cityText}>Offline!</Text>
+            
           <View style={styles.cityRow}>
             <Text variant="labelLarge" style={styles.cityText}>
-              LOCATION
+              {city}
             </Text>
 
             <IconButton
@@ -124,19 +124,6 @@ export default function App({
               iconColor="rgba(255,255,255,0.95)"
               style={styles.iconBtnTight}
             // onPress={onOpenCityMenu}
-            />
-            <Text variant="labelLarge" style={styles.cityText}>Offline Mode</Text>
-            <Switch
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={isOfflineMode}
-            />
-            <IconButton
-              icon="cog-outline"
-              size={22}
-              iconColor="rgba(255,255,255,0.95)"
-              style={styles.iconBtnTight}
-            // onPress={onPressSettings}
             />
           </View>
 
@@ -231,8 +218,10 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 32,
-    height: 32,
+    width: 48,
+    height: 48,
+    borderRadius: 4,
+    marginInlineEnd: 8
   },
 
   stopIcon: {

@@ -48,7 +48,6 @@ type stopListItem = {
 
 export type Props = {
     routes: routesRow[];
-
     dataState: "loading" | "error" | "empty" | "success";
 };
 
@@ -59,6 +58,8 @@ export function showAlert(message: string) {
         Alert.alert(message);
     }
 }
+
+export let versionString="a0.2.1"
 
 export let city = "Saskatoon"
 
