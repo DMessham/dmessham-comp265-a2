@@ -15,43 +15,111 @@ import {
     PaperProvider
   } from "react-native-paper";
 
-type listItemProps = [
-    title: string,
-    state: 'loading' | 'error' | 'empty' | 'success',
-    hasDropDown: boolean,
-    dropDownOpen: boolean,
-    text: string,
-    type: 'route' | 'stop' | 'setting' | 'step' | null,
-    children:React.ReactNode
+type listItemProps = {
 
-]
+}
 
-export default function listItem( {title='no title', state='error', hasDropDown=false, dropDownOpen=false, text='no text', type=null, children = null} : 
-    { title: string, state: 'loading' | 'error' | 'empty' | 'success', hasDropDown: boolean, dropDownOpen: boolean, text: string, type: 'route' | 'stop' | 'setting' | 'step' | null, children:React.ReactNode}) 
-    {    const router = useRouter();
-    const params = useLocalSearchParams();}
-
-    if (state = 'loading'){
-
-    }else if (state = 'empty'){
-        
-    }else if (item.state = 'error'){
-        
-    } else if (item.state = 'loading'){
-        
-    } else 
-
-    return (
+export function toggleContainer(
+    state : 'loading' | 'error' | 'empty' | 'success' = 'empty', 
+    type: 'route' | 'stop' | 'setting' | 'step' | 'bool' | null , 
+    dropDownOpenStart: boolean = false,
+    childrenClosed:React.ReactNode,
+    childrenOpen:React.ReactNode
+){
+    let dropDownOpen = dropDownOpenStart
+    
+    if(dropDownOpen){
         <View style={styles.container}>
             <Text
-                style={styles.text}
-                onPress={() => {
-                    router.setParams({ name: 'Updated' });
-                }}>
-                TODO: show the {params.dataType} for {params.objType} {params.onestopID}
+                style={styles.text}>
+                Dropdown is open
             </Text>
+        {childrenOpen}
         </View>
-    );
+        
+    }else{
+        <View style={styles.container}>
+            <Text
+                style={styles.text}>
+                Dropdown is closed
+            </Text>
+            {childrenClosed}
+        </View>
+
+    }
+}
+
+export default function listItem(
+    title : string, text : string, 
+    state : 'loading' | 'error' | 'empty' | 'success', 
+    type: 'route' | 'stop' | 'setting' | 'step' | 'bool' | null , 
+    children:React.ReactNode) {
+    const router = useRouter();
+    const params = useLocalSearchParams();
+
+    if (state = 'loading'){
+        return (
+            <View style={styles.container}>
+                <Text
+                style={styles.text}>
+                Loading
+                </Text>
+            </View>
+        )
+
+    }else if (state = 'empty'){
+        return (
+            <View style={styles.container}>
+                <Text
+                style={styles.text}>
+                There is nothing here!
+                </Text>
+            </View>
+        )
+    } else if (state = 'success'){
+        return (
+            <View style={styles.container}>
+                <>
+                <Text
+                    style={styles.text}>
+                    title: {title}
+                </Text>
+                <Text
+                    style={styles.text}>
+                    text: {text}
+                </Text>
+                </>
+                
+                <>
+                <Text
+                    style={styles.text}>
+                    title: {title}
+                </Text>
+                {children}
+                </>
+            </View>
+        );
+    } else if (state = 'error'){
+        return (
+            <View style={styles.container}>
+                <Text
+                style={styles.text}>
+                ERROR!
+                </Text>
+            </View>
+        )
+    } else {
+        return (
+            <View style={styles.container}>
+                <Text
+                style={styles.text}>
+                Invalid listItem state. Something has gone very wrong!
+                </Text>
+            </View>
+        )
+    }
+
+   
 }
 
 const styles = StyleSheet.create({

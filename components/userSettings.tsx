@@ -23,20 +23,20 @@ const theme = {
     colors: paperDark.colors, // Copy it from the color codes scheme and then use it here
 };
 
-let deviceState= {
+let deviceState = {
     headphonesConnected: true,
-    batteryState:{
+    batteryState: {
         level: 100,
         low: false, // if battery is below 20
         critical: false, //if battery is below 7
         isCharging: true
     },
-    networkState:{
-        isOnline:true,
-        connection:"data",//'data', 'dataRoaming', 'wifi', airplane, null
-        connectionDataType:"lte", // 2g, lte, 5Guwb, 5G, 4g,
+    networkState: {
+        isOnline: true,
+        connection: "data",//'data', 'dataRoaming', 'wifi', airplane, null
+        connectionDataType: "lte", // 2g, lte, 5Guwb, 5G, 4g,
     },
-    emergencyMode:{
+    emergencyMode: {
         active: false,
         reason: null, // 'manual', 'sos', 'battery', 
     }
@@ -55,27 +55,53 @@ let config = {
     emergencyMode: false
 }
 
-export function getSettings(request : string){
-    switch(request){
+export function getSettings(request: string) {
+    switch (request) {
         case 'distUnit':
-            return("km")
+            return ("km")
         case 'timeUnit':
-            return("12h")
+            return ("12h")
         case 'use24Time':
-            if(config.units.time == '24h'){
+            if (config.units.time == '24h') {
                 return true;
             }
-            else{
+            else {
                 return false;
             }
         case 'use12Time':
-            return(config.units.time == '12h')
+            return (config.units.time == '12h')
         case 'isEmergency':
-            return(false)
+            return (false)
         default:
-            return(null)
+            return (null)
     }
 }
-export function listSetting(request : string){
+export function listSetting(value: string, title: string = "toggleItem title", text: string = "toggleItem description") {
 
+
+    return (
+        
+        <View>
+            <Text>Title: {title}</Text>
+            <Text>Desc: {text}</Text>
+            <Text>Current value: {value}</Text>
+        </View>
+    )
+}
+
+export function toggleItem(item: boolean, title: string = "toggleItem title", text: string = "toggleItem description") {
+    const [isOfflineMode, setIsOfflineMode] = useState(item);
+    const toggleSwitch = () => setIsOfflineMode(previousState => !previousState); // copied right from the react native docs lol
+    return (
+
+        <View>
+            <Text>{title}</Text>
+            <Text>{text}</Text>
+            <Switch
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={item}
+            />
+        </View>
+    )
 }
