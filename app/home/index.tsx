@@ -112,7 +112,7 @@ export default function App({
           </View>
 
           <Text variant="labelLarge" style={styles.cityText}>Offline!</Text>
-            
+
           <View style={styles.cityRow}>
             <Text variant="labelLarge" style={styles.cityText}>
               {city}
@@ -130,23 +130,17 @@ export default function App({
         </View>
       </Appbar.Header>
       <View>
-        
-      <ScrollView>
-          <Text>MAP GOES HERE </Text>
+        <ScrollView>
+          <Text style={styles.hero}>It's taking a while to get the map...</Text>
+          <ProgressBar indeterminate />
         </ScrollView>
         <View>
-          <TextInput
-            onSubmitEditing={() => showAlert('Search not yet implemented')}
-            enterKeyHint="search"
-            returnKeyType="search"
-            inputMode="search"
-            placeholder="Where do you want to go?" />
+          <Text>Favorites</Text>
+          <ScrollView>
+            <RouteList routes={routes} dataState='success'></RouteList>
+          </ScrollView>
         </View>
-        <View style={styles.illustrationWrap}>
-            <ActivityIndicator size="large" color={onColor} />
-            <Text style={styles.hero}>It's taking a while to get realtime info...</Text>
-            <ProgressBar  indeterminate />
-          </View>
+        
         <Text>Nearby</Text>
         <ScrollView>
           <RouteList routes={routes} dataState='success'></RouteList>
