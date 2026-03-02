@@ -4,7 +4,9 @@ import {
     Button,
     Divider,
     IconButton,
+    Avatar,
     List,
+    Icon,
     Switch,
     Text,
     ProgressBar,
@@ -164,77 +166,67 @@ export function RouteList({ routes, dataState }: Props) {
                                         title={row.name}
                                         titleStyle={styles.routesDay}
                                         left={() => (
-                                            <Text style={styles.routesTemps}>
-                                                {row.routeNumber}
-
-                                            </Text>
+                                            <><Avatar.Text size={32} label={row.routeNumber} /></>
                                         )}
                                         right={() => (
                                             <Text style={styles.routesTemps}>
-                                                In {row.arrivalTime} & {row.nextArrivalTime} Minutes
-                                                {/* Show on map */}
+                                                In {row.arrivalTime} & {row.nextArrivalTime} Minutes  {<Link                         style={styles.button}
+                                            href={{
+                                                pathname: '/home/details',
+                                                params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }}}>Show On Map</Link>}
                                             </Text>
 
                                         )}
                                         style={styles.routesRow}
                                     />
                                     <View style={styles.stopsCard}>
-                                        {/* TODO: make hide/show functions work */}
-                                        <React.Fragment key={`${row.name}-stoplistHeader`}>
-                                            <List.Item
-                                                title={`${row.stops.length} stops`}
-                                                titleStyle={styles.routesTemps}
-                                                right={() => (
-                                                    <>
-                                                        <Link
-                                                            style={styles.button}
-                                                            href={{
-                                                                pathname: '/home/details',
-                                                                params: { onestopID: row.onestopID, objType: 'route', dataType: 'map' }
-                                                            }}> Show On Map</Link>
-                                                        <IconButton
-                                                            icon="chevron-down"
-                                                            size={22}
-                                                            iconColor="rgba(255,255,255,0.95)"
+                                    <List.Accordion
+                                        title={`${row.stops.length} stops`}
+                                        titleStyle={styles.routesDay}
+                                        description=""
+                                        left={(props) => (
+                                            <><List.Icon {...props} icon="bus" /></>
+                                        )}
+                                        right={() => (
+                                            <>
+                                                
+                                                <List.Icon
+                                                    icon="chevron-down"
+                                                    style={styles.iconBtnTight}
+                                                // onPress={onPressSettings}
+                                                />
+                                            </>
 
-                                                            style={styles.iconBtnTight}
-                                                        // onPress={onPressSettings}
-                                                        />
-                                                    </>
-
-                                                )}
-                                                style={styles.stoplistHeaderRow}
-                                            />
-                                        </React.Fragment>
-                                        {/* stop list */}
+                                        )}
+                                        style={styles.stoplistHeaderRow}>
                                         {row.stops.map((row2, idx) => (
-                                            <React.Fragment key={`${row.name}+${row2.name}-stoplistHeader`}>
                                                 <List.Item
                                                     title={row2.name}
                                                     titleStyle={styles.routesDay}
-                                                    left={() => (
+                                                    left={(props) => (
                                                         // <IconSymbol size={22} name="busstop" color="rgba(255,255,255,0.9)"
                                                         //     style={styles.iconBtnTight} />
-                                                        <Image
-                                                            style={styles.stopIcon}
-                                                            source={{
-                                                                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
-                                                            }}
-                                                        />
+                                                        
+                                                    <><List.Icon {...props} icon="bus-stop" /></>
                                                     )}
                                                     right={() => (
                                                         <Text style={styles.routesTemps}>
-                                                            In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes
+                                                            In {row2.arrivalTime} & {row2.nextArrivalTime} Minutes <Link
+                                                    style={styles.button}
+                                                    href={{
+                                                        pathname: '/home/details',
+                                                        params: { onestopID: row2.onestopID, objType: 'stop', dataType: 'map' }
+                                                    }}> Show On Map
+                                                    </Link>
                                                         </Text>
 
                                                     )}
                                                     style={styles.routesRow}
                                                 />
-                                                {idx < row.stops.length - 1 ? (
-                                                    <Divider style={styles.divider} />
-                                                ) : null}
-                                            </React.Fragment>
                                         ))}
+                                    </List.Accordion>
+                                
+                                        
                                     </View>
 
                                 </React.Fragment>
@@ -261,7 +253,7 @@ export function RouteList({ routes, dataState }: Props) {
                                     titleStyle={styles.routesTemps}
                                     style={styles.stoplistHeaderRow}
                                 />
-                                
+
                             </View>
                         </View>
                     </View>
@@ -375,44 +367,44 @@ export function SearchList({ routes }: Props) {
     );
 }
 
-export function BoolSwitch({value=false}:{value: boolean}) {
+export function BoolSwitch({ value = false }: { value: boolean }) {
     const [isSwitchOn, setIsSwitchOn] = React.useState(value);
 
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-  
+
     return <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />;
 }
 
-export function StringSwitch({value = "On", onValue = 'On', offValue = "Off"}:{value:string,onValue:string, offValue:string}) {
-    let item=null
-    if (value==onValue){
-        item=true
-    } else  if (value==offValue){
-        item=false
+export function StringSwitch({ value = "On", onValue = 'On', offValue = "Off" }: { value: string, onValue: string, offValue: string }) {
+    let item = null
+    if (value == onValue) {
+        item = true
+    } else if (value == offValue) {
+        item = false
     }
-    function toggleSwitch(){
-        if (value==onValue){
-            item=false
-            value=offValue
-        } else  if (value==offValue){
-            item=true
-            value=onValue
+    function toggleSwitch() {
+        if (value == onValue) {
+            item = false
+            value = offValue
+        } else if (value == offValue) {
+            item = true
+            value = onValue
         }
     }
-    if (item !=null){
+    if (item != null) {
         return (
             <>
-            <Switch
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={item}
-            />
+                <Switch
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={toggleSwitch}
+                    value={item}
+                />
             </>
-    )
-    } else{
-        return(
+        )
+    } else {
+        return (
             <>
-            <Text>ERROR '{value}' is Invalid</Text>
+                <Text>ERROR '{value}' is Invalid</Text>
             </>
         )
     }

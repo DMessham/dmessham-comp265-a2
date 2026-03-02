@@ -83,6 +83,12 @@ export function ListSetting({value='fallback', title="setting title", text="sett
             <Text>Title: {title}</Text>
             <Text>Desc: {text}</Text>
             <Text>Current value: {value.toString()}</Text>
+            <List.Item
+                title={title}
+                description={text}
+                left={props => <List.Icon {...props} icon="lock" />}
+                right={props=> <Text {...props}>Current value: {value.toString()}</Text>}
+                    />
         </>
     )
 }
