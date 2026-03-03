@@ -49,9 +49,11 @@ export default function AboutScreen() {
         <Link href="https://saskatoon.ca" style={styles.button}>
           Website
         </Link>
-        <Link href="https://saskatoon.ca" style={styles.button}>
-          Tickets
-        </Link>
+        <Link style={styles.button}
+            href={{
+              pathname: '/profile/details',
+              params: { objType: 'busPass', dataType: 'paymentScreen' }
+            }}>My Pass</Link>
       </View>
       <View style={styles.container}>
         <Text style={styles.titleText}>TransitTrac</Text>
