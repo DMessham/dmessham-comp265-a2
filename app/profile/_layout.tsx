@@ -14,9 +14,9 @@ export default function RootLayout() {
       },
     }}>
     
-    <Stack.Screen name="index" options={{title: '{USER.USERNAME}' }} />
+    <Stack.Screen name="index" options={{title: 'Your Profile' }} />
     <Stack.Screen name="About" options={{title: 'About TransitTrac' }} />
-    <Stack.Screen name="Settings" options={{title: 'Settings' }} />
+    <Stack.Screen name="Settings" options={{title: 'TransitTrac Settings' }} />
     </Stack>
   );
 }

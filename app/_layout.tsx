@@ -25,7 +25,7 @@ export default function RootLayout() {
         backgroundColor: '#151215',
       },
     }}>
-      <Tabs.Screen name="home" options={{headerShown: false, title: 'TransitTrack' }} />
+      <Tabs.Screen name="home" options={{headerShown: false, title: 'Home' }} />
       <Tabs.Screen name="profile" options={{ headerShown: false, title: 'You'  }} />
       <Tabs.Screen name="search" options={{ headerShown: false, title: 'Search'  }} />
       <Tabs.Screen name="trip" options={{ headerShown: false, title: 'Map'  }} />

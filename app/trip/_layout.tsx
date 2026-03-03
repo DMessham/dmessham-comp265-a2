@@ -14,7 +14,7 @@ export default function RootLayout() {
       },
     }}>
     
-    <Stack.Screen name="index" options={{title: 'Trip' }} />
+    <Stack.Screen name="index" options={{title: 'Map' }} />
     <Stack.Screen name="activeTripView" options={{title: 'Active Trip',  headerShown: false,  }} />
     </Stack>
   );

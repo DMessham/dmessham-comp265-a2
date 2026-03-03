@@ -14,7 +14,7 @@ export default function RootLayout() {
       },
     }}>
     
-    <Stack.Screen name="index" options={{title: '{USER.USERNAME}' }} />
+    <Stack.Screen name="index" options={{title: 'Search' }} />
     <Stack.Screen name="routePlan" options={{title: 'Route' }} />
     </Stack>
   );

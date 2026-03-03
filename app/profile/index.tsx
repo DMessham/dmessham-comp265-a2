@@ -36,9 +36,6 @@ export default function AboutScreen() {
         <Button mode="text" compact={true} buttonColor="#11243e"  onPress={() =>showAlert('Search not yet implemented')} style={styles.button}>
           Log Out
         </Button>
-        <Link href="/profile/About" style={styles.button}>
-          About TransitTrac
-        </Link>
       </View>
       <View style={styles.container}>
         <Text style={styles.titleText}>Saskatoon Transit</Text>
@@ -50,7 +47,7 @@ export default function AboutScreen() {
         </Link>
       </View>
       <View style={styles.container}>
-        <Text style={styles.titleText}>TransitTrack</Text>
+        <Text style={styles.titleText}>TransitTrac</Text>
         <Link href="/profile/Settings" style={styles.button}>
           Settings
         </Link>

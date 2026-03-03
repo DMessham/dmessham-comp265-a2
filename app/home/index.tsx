@@ -104,7 +104,7 @@ export default function App({
               style={styles.logo}
             />
             <Text variant="displaySmall" style={styles.tempText}>
-              TransitTrak
+              TransitTrac
             </Text>
             <Text variant="labelLarge" style={styles.degreeMark}>
               {versionString}
