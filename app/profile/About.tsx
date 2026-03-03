@@ -16,7 +16,7 @@ export default function AboutScreen() {
             />
         <Text style={styles.titleText}>TransitTrac</Text>
         <Text style={styles.labelText}>React Native Edition</Text>
-        <Text style={styles.text}>Version {versionString} ()</Text>
+        <Text style={styles.text}>Version {versionString} ({versionDate})</Text>
         
         <Text style={styles.text}>2026 DMessham</Text>
 

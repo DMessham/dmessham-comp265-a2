@@ -33,9 +33,14 @@ export default function AboutScreen() {
         <Link href="/profile/About" style={styles.button}>
           Your Account
         </Link>
-        <Button mode="text" compact={true} buttonColor="#11243e"  onPress={() =>showAlert('Search not yet implemented')} style={styles.button}>
+        <Button mode="text" compact={true} buttonColor="#11243e" onPress={() => showAlert('Search not yet implemented')} style={styles.button}>
           Log Out
         </Button>
+          <Link style={styles.button}
+            href={{
+              pathname: '/home/details',
+              params: { onestopID: row.onestopID, objType: 'favplaces', dataType: 'placelist' }
+            }}>favorite Places</Link>
       </View>
       <View style={styles.container}>
         <Text style={styles.titleText}>Saskatoon Transit</Text>
