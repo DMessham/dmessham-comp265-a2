@@ -61,6 +61,8 @@ export function showAlert(message: string) {
 
 export let versionString="a0.2.1"
 
+export let versionDate="2026.03.02_094456-0600"
+
 export let city = "Saskatoon"
 
 export let routes = [

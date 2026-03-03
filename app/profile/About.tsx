@@ -3,7 +3,7 @@ import { ActivityIndicator, Alert, Image, Platform, ScrollView, StyleSheet, View
 import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
 import { Spacing } from "../../constants/theme";
-import { versionString } from "@/components/ui/common";
+import { versionString, versionDate } from "@/components/ui/common";
 export default function AboutScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
@@ -16,9 +16,9 @@ export default function AboutScreen() {
             />
         <Text style={styles.titleText}>TransitTrac</Text>
         <Text style={styles.labelText}>React Native Edition</Text>
-        <Text style={styles.text}>Version {versionString}</Text>
+        <Text style={styles.text}>Version {versionString} ()</Text>
         
-        <Text style={styles.text}>2025 DMessham</Text>
+        <Text style={styles.text}>2026 DMessham</Text>
 
         <Text style={styles.text}>Powered By Transitland API</Text>
       </View>
