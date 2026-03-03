@@ -35,7 +35,7 @@ export default function AboutScreen() {
               pathname: '/profile/details',
               params: { objType: 'CURRENT_USER', dataType: 'profileview' }
             }}>Your Account</Link>
-        <Button mode="text" compact={true} buttonColor="#11243e" onPress={() => showAlert('Search not yet implemented')} style={styles.button}>
+        <Button mode="text" compact={true} buttonColor="#11243e" onPress={() => showAlert('Accounts not yet implemented')} style={styles.button}>
           Log Out
         </Button>
           <Link style={styles.button}
