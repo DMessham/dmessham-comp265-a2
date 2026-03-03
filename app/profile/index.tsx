@@ -39,7 +39,7 @@ export default function AboutScreen() {
           <Link style={styles.button}
             href={{
               pathname: '/home/details',
-              params: { onestopID: row.onestopID, objType: 'favplaces', dataType: 'placelist' }
+              params: { onestopID: 'INTERNAL', objType: 'favplaces', dataType: 'placelist' }
             }}>favorite Places</Link>
       </View>
       <View style={styles.container}>

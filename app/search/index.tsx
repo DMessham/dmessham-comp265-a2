@@ -132,7 +132,7 @@ export default function App({
                         placeholder="Search Bus Routes & Stops" />
                 </View>
                 <ScrollView>
-                    <RouteList routes={routes} dataState={dataState}></RouteList>
+                    <RouteList routes={routes} dataState='loading'></RouteList>
                 </ScrollView>
             </View>
         </PaperProvider>
